@@ -15,17 +15,15 @@ import {
   AdminRegisterLink,
 } from "../styles/styles";
 import { motion } from "framer-motion"
-import { LoremIpsum } from "lorem-ipsum";
 import bg from "../assets/bg.png";
 import bg1 from "../assets/bg1.png";
 import { Link, useNavigate } from "react-router-dom";
 
-const lorem = new LoremIpsum();
+
 
 const Home = () => {
   const navigate = useNavigate();
-
-   const LoremText = lorem.generateParagraphs(1);
+   
 
   const handleLoginClick = () => {
     navigate('/choose-user')
@@ -62,11 +60,12 @@ const Home = () => {
                 style={{textShadow:"2px 2px 4px rgba(0, 0, 0, 0.5)"}}
                 >School Management System</motion.h1>
                 <LoremTextContainer>
-                    <p>{LoremText}</p>
+                    <p>A school management system streamlines administrative tasks 
+                      such as attendance tracking, grade management, and scheduling. It 
+                      enhance communication between teachers, students through integrated latforms. This 
+                      system promotes efficiency by automating routine processes and centralizing
+                      academic information, ultimately improving overall educational outcomes. </p>
                 </LoremTextContainer>
-                <AdminRegisterLink>
-                    Admin Register
-                </AdminRegisterLink>
             </SchoolInfo>
             <SchoolImage src={bg} alt='bgImg'/>
         </HomeContainer>

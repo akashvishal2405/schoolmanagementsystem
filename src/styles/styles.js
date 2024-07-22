@@ -180,7 +180,7 @@ export const LoremTextContainer = styled.div`
   color: black;
   text-align: justify;
   padding: 0 20px;
-
+  margin-top: 50px;
   @media screen and (max-width: 768px) {
     font-size: 16px;
   }
