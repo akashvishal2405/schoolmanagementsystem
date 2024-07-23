@@ -14,6 +14,12 @@ export const SidebarContainer = styled.div`
 }
 `;
 
+export const Delete = styled.div`
+ display: flex;
+ justify-content: end;
+ margin-left: 200px;
+`
+
 export const Content = styled.div`
   flex: 1;
 `;

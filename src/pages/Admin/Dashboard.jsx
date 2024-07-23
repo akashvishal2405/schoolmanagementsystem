@@ -20,46 +20,8 @@ import {
 } from "../../styles/DashboardStyles"
 
 const AdminDashboard = () => {
-
-    const [isOpen, setIsOpen] = useState(true);
-    const [events, setEvents] = useState([]);
-    const [announcements, setAnnoucements] = useState([]);
-    const [studentPerformance, setStudentPerformance] = useState(true);
-
-    useEffect(() => {
-        fetchEvents();
-        fetchAnnouncements();
-        fetchStudentPerformance();
-    }, [])
-
-    const fetchEvents = async () => {
-        try{
-                const response =  await axios.get('http://localhost:4000/api/v1/events/getall');
-                setEvents(response.data.events || []);
-        } catch (error) {
-                console.log('Error fetching events', error);
-        }
-    }
-
-    const fetchAnnouncements = async () => {
-            try {
-                
-                const response =  await axios.get('http://localhost:4000/api/v1/announcements/getall');
-                setEvents(response.data.announcements || []);
-        } catch (error) {
-                console.log('Error fetching annoucements', error);
-        }
-    }
-
-    const fetchStudentPerformance = async () => {
-        try {
-            
-            const response =  await axios.get('http://localhost:4000/api/v1/performance/getall');
-            setEvents(response.data.performance || []);
-    } catch (error) {
-            console.log('Error fetching students performance', error);
-    }
-}
+    
+       
   return (
     <AdminDashboardContainer>
         {/* <SidebarContainer> */}
@@ -89,8 +51,8 @@ const AdminDashboard = () => {
                 </Section>
             </TopContent>
             <BottomContent>
-                <Performance studentPerformance = {studentPerformance} />
-                <Announcement announcements = {announcements} />
+                <Performance  />
+                <Announcement  />
             </BottomContent>
         </Content>
     </AdminDashboardContainer>

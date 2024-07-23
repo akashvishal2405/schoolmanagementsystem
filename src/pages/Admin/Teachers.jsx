@@ -1,6 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import Sidebar from './Sidebar';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Sidebar from "./Sidebar";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addTeachersDetails,
+  deleteTeachersDetails,
+} from "../../slice/teacherSlice";
+import { MdDeleteForever } from "react-icons/md";
 
 import {
   TeachersContainer,
@@ -9,100 +15,93 @@ import {
   TeachersContent,
   TeachersHeader,
   TeacherList,
+  Delete,
   TeacherItem,
   AddTeacherForm,
   AddTeacherInput,
-  AddTeacherButton
-} from '../../styles/TeachersStyles';
+  AddTeacherButton,
+} from "../../styles/TeachersStyles";
 
 const Teachers = () => {
-
   const [newTeacher, setNewTeacher] = useState({
     name: "",
     email: "",
     subject: "",
   });
-  const [teachers, setTeachers] = useState([]);
 
-  useEffect(() => {
-    fetchTeachers();
-  }, []);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-  const fetchTeachers = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:4000/api/v1/teachers/getall"
-      );
-      setTeachers(response.data.teachers);
-    } catch (error) {
-      console.log(`Error fetching teachers:`, error);
-    }
+    setNewTeacher((curr) => {
+      return {
+        ...curr,
+        [name]: value,
+      };
+    });
   };
 
-  const handleAddTeacher = async (e) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      newTeacher.name.trim() !== "" &&
-      newTeacher.email.trim() !== "" &&
-      newTeacher.subject.trim() !== ""
-    ) {
-      try {
-        const response = await axios.post(
-          "http://localhost:4000/api/v1/teachers",
-          newTeacher
-        );
-        const createdTeacher = response.data.teacher;
-        console.log(`Response data:`, response.data); // this will log the response data
-        setTeachers([...teachers, createdTeacher]);
-        setNewTeacher({name: '', email: '', subject: ''})
-        
-      } catch (error) {
-        console.log("Error adding  teachers:", error);
-      }
-    }
+    dispatch(addTeachersDetails(newTeacher));
   };
+
+  const TeachersData = useSelector(
+    (state) => state.teachersInfo.teacherDetails
+  );
+
+  const handleDelete = (index) => {
+    dispatch(deleteTeachersDetails(index))
+  }
 
   return (
     <TeachersContainer>
       <SidebarContainer>
-      <Sidebar />
+        <Sidebar />
       </SidebarContainer>
-      
+
       <Content>
         <TeachersContent>
           <TeachersHeader>
-            <AddTeacherForm onSubmit={handleAddTeacher}>
-              <AddTeacherInput 
-              type='text'
-              placeholder='Enter Teacher Name'
-              value={newTeacher.name}
-              onChange={(e) => setNewTeacher({...newTeacher, name: e.target.value})}
+            <AddTeacherForm onSubmit={handleSubmit}>
+              <AddTeacherInput
+                type="text"
+                placeholder="Enter Teacher Name"
+                name="name"
+                value={newTeacher.name}
+                onChange={handleChange}
               />
-               <AddTeacherInput 
-              type='email'
-              placeholder='Enter Teacher email'
-              value={newTeacher.email}
-              onChange={(e) => setNewTeacher({...newTeacher, email: e.target.value})}
+              <AddTeacherInput
+                type="email"
+                placeholder="Enter Teacher email"
+                name="email"
+                value={newTeacher.email}
+                onChange={handleChange}
               />
-               <AddTeacherInput 
-              type='text'
-              placeholder='Enter Teacher Subject'
-              value={newTeacher.subject}
-              onChange={(e) => setNewTeacher({...newTeacher, subject: e.target.value})}
+              <AddTeacherInput
+                type="text"
+                placeholder="Enter Teacher Subject"
+                name="subject"
+                value={newTeacher.subject}
+                onChange={handleChange}
               />
-              <AddTeacherButton type='submit'>Add Teacher</AddTeacherButton>
+              <AddTeacherButton type="submit">Add Teacher</AddTeacherButton>
             </AddTeacherForm>
-            
+
             <TeacherList>
-                {teachers.map((teacher) => (
-                  <TeacherItem key={teacher.id}>{teacher.name} - {teacher.email} {teacher.subject}</TeacherItem>
-                ))}
+              {TeachersData.map((teacher, index) => (
+                <TeacherItem key={index}>
+                  {teacher.name}-{teacher.email}-{teacher.subject}
+                  <Delete onClick={() => handleDelete(index)}><MdDeleteForever /></Delete>
+                </TeacherItem>
+              ))}
             </TeacherList>
           </TeachersHeader>
         </TeachersContent>
       </Content>
     </TeachersContainer>
-  )
-}
+  );
+};
 
 export default Teachers;

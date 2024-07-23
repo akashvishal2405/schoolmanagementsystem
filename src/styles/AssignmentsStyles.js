@@ -32,6 +32,11 @@ export const AssignmentList = styled.ul`
   padding: 0;
 `;
 
+export const Delete = styled.div`
+ display: flex;
+ justify-content: end;
+`
+
 export const AssignmentItem = styled.li`
   background-color: #f9f9f9;
   border-radius: 8px;

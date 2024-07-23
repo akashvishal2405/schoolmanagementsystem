@@ -25,6 +25,11 @@ const Performance = () => {
     {id: 2, name: "Steve Harington", score: 86},
     {id: 3, name: "Steve Harington", score: 93},
   ]
+
+
+
+ 
+ 
   return (
    <PerformanceContainer>
     <SidebarContainer>
@@ -40,11 +45,14 @@ const Performance = () => {
         </SchoolPerformance>
         <PerformanceHeader>Individual Performance</PerformanceHeader>
         <IndividualPerformance>
+
+        
             {IndividualPerformanceData.map((student) => (
               <p key={student.id}>
                 {student.name}: {student.score}
               </p>
             ))}
+
         </IndividualPerformance>
       </PerformanceContent>
     </Content>

@@ -67,9 +67,10 @@ const Classes = () => {
               <ClassItem key={index}>
                 {sub.class}
                 <Delete onClick={() => handleDelete(index)}>
-                  <MdDeleteForever size={25} />
-                </Delete>
+              <MdDeleteForever size={25} />
+            </Delete>
               </ClassItem>
+              
             ))}
           </ClassList>
         </ClassesContent>

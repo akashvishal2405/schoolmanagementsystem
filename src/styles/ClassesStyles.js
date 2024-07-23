@@ -15,6 +15,7 @@ export const ClassesContainer = styled.div`
 export const Delete = styled.div`
  display: flex;
  justify-content: end;
+ margin-left: 200px;
 `
 
 export const Content = styled.div`
@@ -40,6 +41,8 @@ export const ClassList = styled.ul`
 `;
 
 export const ClassItem = styled.li`
+  display: flex;
+  aligin-item: center;
   background-color: #f9f9f9;
   border-radius: 12px;
   padding: 10px 20px;

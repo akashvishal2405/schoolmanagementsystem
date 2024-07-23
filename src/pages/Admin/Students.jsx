@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { MdDeleteForever } from "react-icons/md";
 
 import {
   StudentsContainer,
   SidebarContainer,
   Content,
+  Delete,
   StudentsContent,
   StudentsHeader,
   StudentList,
@@ -14,52 +17,38 @@ import {
   AddStudentInput,
   AddStudentButton,
 } from "../../styles/StudentsStyles";
- 
+import { addStudentData, deleteStudentData } from "../../slice/studentSlice";
+
 const Students = () => {
-  const [newStudent, setNewStudent] = useState({
+  const [studentInfo, setStudentInfo] = useState({
     name: "",
-    registrationNumber: "",
+    number: "",
     grade: "",
   });
-  const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
+  const handleOnChangle = (event) => {
+    const { name, value } = event.target;
 
-  const fetchStudents = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:4000/api/v1/students/getall"
-      );
-      setStudents(response.data.students);
-    } catch (error) {
-      console.log(`Error fetching students:`, error);
-    }
+    setStudentInfo((curr) => {
+      return {
+        ...curr,
+        [name]: value,
+      };
+    });
   };
 
-  const handleAddStudents = async (e) => {
+  const student = useSelector((state) => state.studentInfo.studentData);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      newStudent.name.trim() !== "" &&
-      newStudent.registrationNumber.trim() !== "" &&
-      newStudent.grade.trim() !== ""
-    ) {
-      try {
-        const response = await axios.post(
-          "http://localhost:4000/api/v1/students",
-          newStudent
-        );
-        console.log(`Response data:`, response.data); // this will log the response data
-        setStudents([...students, response.data.student]);
-        setNewStudent({name: '', registrationNumber: '', grade: ''})
-        
-      } catch (error) {
-        console.log("Error adding  students:", error);
-      }
-    }
+    dispatch(addStudentData(studentInfo));
   };
 
+  const deleteUserInfo = (index) => {
+    dispatch(deleteStudentData(index));
+  };
   return (
     <StudentsContainer>
       <SidebarContainer>
@@ -68,27 +57,40 @@ const Students = () => {
       <Content>
         <StudentsContent>
           <StudentsHeader>
-            <AddStudentForm onSubmit={handleAddStudents}>
-              <AddStudentInput type="text" placeholder="Enter Student Name"
-              value={newStudent.name}
-              onChange={(e) => setNewStudent({...newStudent, name: e.target.value})}
+            <AddStudentForm onSubmit={handleSubmit}>
+              <AddStudentInput
+                type="text"
+                placeholder="Enter Student Name"
+                name="name"
+                value={studentInfo.name}
+                onChange={handleOnChangle}
               />
               <AddStudentInput
                 type="text"
                 placeholder="Enter Registration Number"
-                value={newStudent.registrationNumber}
-                onChange={(e) => setNewStudent({...newStudent, registrationNumber: e.target.value})}
+                name="number"
+                value={studentInfo.number}
+                onChange={handleOnChangle}
               />
-              <AddStudentInput type="text" placeholder="Enter Grade"
-              value={newStudent.grade}
-              onChange={(e) => setNewStudent({...newStudent, grade: e.target.value})}
+              <AddStudentInput
+                type="text"
+                placeholder="Enter Grade"
+                name="grade"
+                value={studentInfo.grade}
+                onChange={handleOnChangle}
               />
               <AddStudentButton type="submit">Add Student</AddStudentButton>
             </AddStudentForm>
             <StudentList>
-              {students.map((student) => (
-                <StudentItem key={student.id}>{student.name} - {student.registrationNumber} - {student.grade}</StudentItem>
-              ))} 
+              {student.map((stud, index) => (
+                <StudentItem>
+                  {stud.name}-{stud.number}-{stud.grade}
+                  <Delete>
+                  <MdDeleteForever size={25} 
+                  onClick={() => deleteUserInfo(index)}/>
+                  </Delete>
+                </StudentItem>
+              ))}
             </StudentList>
           </StudentsHeader>
         </StudentsContent>

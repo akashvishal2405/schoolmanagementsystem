@@ -9,11 +9,18 @@ export const SidebarContainer = styled.div`
   flex: 0 0 250px; /* Sidebar width */
 `;
 
+export const Delete = styled.div`
+ display: flex;
+ justify-content: end;
+ margin-left: 50px;
+ margin-top: 10px;
+`
+
 export const Content = styled.div`
   flex: 1;
   @media screen and (max-width: 768px) {
   font-size: 16px;
-  margin-left: -170px;
+  margin-left: -210px;
   padding: 20px;
 }
 `;
@@ -30,10 +37,15 @@ export const StudentsHeader = styled.h2`
 export const StudentList = styled.ul`
   list-style: none;
   padding: 0;
+   @media screen and (max-width: 768px) {
+    width: 300px;
+}
  
 `;
 
 export const StudentItem = styled.li`
+  display: flex;
+  aligin-item: center;
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 10px 20px;
