@@ -50,6 +50,7 @@ const Announcement = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addAnnouncement(schoolAnnouncement));
+    
   };
 
   const deleteAnnouncementInfo = (index) => {

@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+
 import {
   ClassesContainer,
   Content,
@@ -16,6 +17,7 @@ import {
   AddClassInput,
 } from "../../styles/ClassesStyles";
 import { addClasses, deleteClass } from "../../slice/classSlice";
+import axios from "axios";
 
 const Classes = () => {
   const dispatch = useDispatch();
@@ -67,10 +69,9 @@ const Classes = () => {
               <ClassItem key={index}>
                 {sub.class}
                 <Delete onClick={() => handleDelete(index)}>
-              <MdDeleteForever size={25} />
-            </Delete>
+                  <MdDeleteForever size={25} />
+                </Delete>
               </ClassItem>
-              
             ))}
           </ClassList>
         </ClassesContent>

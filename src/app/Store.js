@@ -4,6 +4,7 @@ import studentReducer from "../slice/studentSlice";
 import announcementReducer from "../slice/announcementSlice";
 import teacherReducer from "../slice/teacherSlice";
 import assignmentReducer from "../slice/assignmentSlice";
+import examReducer from "../slice/examSlice";
 
 
 const store = configureStore({
@@ -12,7 +13,8 @@ const store = configureStore({
         studentInfo: studentReducer,
         announcementInfo: announcementReducer,
         teachersInfo: teacherReducer,
-        assignments: assignmentReducer
+        assignments: assignmentReducer,
+        examInfo: examReducer
     }
 })
 

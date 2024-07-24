@@ -17,6 +17,12 @@ export const Content = styled.div`
 }
 `;
 
+export const Delete = styled.div`
+ display: flex;
+ justify-content: end;
+`
+
+
 export const ExamHeader = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
